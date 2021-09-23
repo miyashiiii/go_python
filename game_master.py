@@ -1,8 +1,12 @@
+from enum import Enum, auto
+class Point(Enum):
+    EMPTY = auto()
+    BLACK = auto()
+    WHITE = auto()
+    FRAME = auto()
+
+
 class GameMaster:
-    EMPTY = 0
-    BLACK = 1
-    WHITE = 2
-    FRAME = 3
 
     def __init__(self, size=19):
         self.size = size
@@ -35,9 +39,9 @@ class GameMaster:
         ]
         for i, row in enumerate(self.board[1:-1]):
             for j, point in enumerate(row[1:-1]):
-                if point == self.BLACK:
+                if point == Point.BLACK:
                     chars[j][i] = "●"
-                elif point == self.WHITE:
+                elif point == Point.WHITE:
                     chars[j][i] = "○"
 
         for char_row in chars:

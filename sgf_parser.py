@@ -3,11 +3,10 @@ from enum import Enum
 from enum import  auto
 
 import db
-from game_master import GameMaster
+from game_master import GameMaster, Point
 
 
-
-class TransfarType(Enum):
+class TransferType(Enum):
     nothing = auto()
     rotate_90 = auto()
     rotate_180 = auto()
@@ -107,7 +106,7 @@ class SgfData:
                 game_master.pass_()
                 continue
             x, y = self.flat_idx_to_idx(move)
-            color = i % 2 + 1
+            color = Point.BLACK if i%2 == 0 else Point.WHITE
             game_master.move(x, y, color)
             game_master.print_cui()
 

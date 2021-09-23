@@ -1,10 +1,10 @@
 from enum import Enum
 from enum import  auto
 
-from game_master import GameMaster
+from game_master import GameMaster, Point
 
 
-class TransfarType(Enum):
+class TransferType(Enum):
     nothing = auto()
     rotate_90 = auto()
     rotate_180 = auto()
@@ -94,9 +94,15 @@ class SgfData:
 
     def play(self):
         game_master = GameMaster(9)
-        for move in self.moves:
-            x, y = self.chars2idx(move[1])
-            game_master.move(x, y, 1)
+        for color,point in self.moves:
+            x, y = self.chars2idx(point)
+            if color == "B":
+                color = Point.BLACK
+            elif color == "W":
+                color = Point.WHITE
+            else:
+                raise ValueError(f"invalid color char: {color}" )
+            game_master.move(x, y, color)
             game_master.print_cui()
 
     def print(self):
