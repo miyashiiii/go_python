@@ -1,6 +1,6 @@
 import sys
 from enum import Enum
-from enum import  auto
+from enum import auto
 
 import db
 from game_master import GameMaster, Point
@@ -15,6 +15,7 @@ class TransferType(Enum):
     h_flip_rotate_90 = auto()
     h_flip_rotate_180 = auto()
     h_flip_rotate_270 = auto()
+
 
 class SgfData:
     def __init__(self, s):
@@ -97,7 +98,7 @@ class SgfData:
         elif type_ in ["B", "W"]:
             self.add_move(type_, value)
         else:
-            print('not supported:',type_)
+            print('not supported:', type_)
 
     def play(self):
         game_master = GameMaster(self.board_size)
@@ -106,7 +107,7 @@ class SgfData:
                 game_master.pass_()
                 continue
             x, y = self.flat_idx_to_idx(move)
-            color = Point.BLACK if i%2 == 0 else Point.WHITE
+            color = Point.BLACK if i % 2 == 0 else Point.WHITE
             game_master.move(x, y, color)
             game_master.print_cui()
 
@@ -140,11 +141,13 @@ class SgfData:
         self.print()
 
     def insert_db(self):
-        values={}
-        for i,move in enumerate(self.moves):
+        values = {}
+        for i, move in enumerate(self.moves):
             values[f"move{i}"] = move
 
         db.games.insert().execute(**values)
+
+
 def main():
     with open(sys.argv[1]) as f:
         s = f.read()
@@ -152,6 +155,7 @@ def main():
 
     sgf = SgfData(s)
     sgf.play()
+
 
 if __name__ == "__main__":
     main()

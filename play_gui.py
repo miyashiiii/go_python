@@ -1,5 +1,5 @@
 from enum import Enum
-from enum import  auto
+from enum import auto
 
 from game_master import GameMaster, Point
 
@@ -94,14 +94,14 @@ class SgfData:
 
     def play(self):
         game_master = GameMaster(9)
-        for color,point in self.moves:
+        for color, point in self.moves:
             x, y = self.chars2idx(point)
             if color == "B":
                 color = Point.BLACK
             elif color == "W":
                 color = Point.WHITE
             else:
-                raise ValueError(f"invalid color char: {color}" )
+                raise ValueError(f"invalid color char: {color}")
             game_master.move(x, y, color)
             game_master.print_cui()
 
