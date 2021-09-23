@@ -66,7 +66,7 @@ class SgfData:
             raise ValueError
 
     def chars_to_flat_idx(self, value):
-        return int(f"{self.char2idx(value[1])}{self.char2idx(value[0])}")
+        return f"{self.char2idx(value[1])}{self.char2idx(value[0])}"
 
     def flat_idx_to_idx(self, flat_idx):
         return [int(c) for c in str(flat_idx)]
@@ -112,17 +112,17 @@ class SgfData:
             game_master.print_cui()
 
     def print(self):
-        print("event_name", self.event_name)
-        print("game_datetime", self.game_datetime)
-        print("black_player", self.black_player)
-        print("white_player", self.white_player)
-        print("komi", self.komi)
-        print("winner", self.winner)
-        print("result", self.result)
-        print("board_size", f"{self.board_size}路盤")
-        print("game_name", self.game_name)
-        print("place_name", self.place_name)
-        print("moves", self.moves)
+        print("大会名　：", self.event_name)
+        print("対局日時：", self.game_datetime)
+        print("黒番　　：", self.black_player)
+        print("白番　　：", self.white_player)
+        print("コミ　　：", self.komi)
+        print("勝ち　　：", self.winner)
+        print("結果　　：", self.result)
+        print("盤サイズ：", f"{self.board_size}路盤")
+        print("対局名　：", self.game_name)
+        print("対局場所：", self.place_name)
+        print("手数　　：", f"{len(self.moves)}手")
 
     def parse(self, s):
         moves = s[1:-1].split(";")
