@@ -3,7 +3,7 @@ from enum import Enum
 from enum import auto
 
 import db
-from game_master import GameMaster, Point
+from game_master import GameMaster, Color
 
 
 class TransferType(Enum):
@@ -107,8 +107,8 @@ class SgfData:
                 game_master.pass_()
                 continue
             x, y = self.flat_idx_to_idx(move)
-            color = Point.BLACK if i % 2 == 0 else Point.WHITE
-            game_master.move(x, y, color)
+            color = Color.BLACK if i % 2 == 0 else Color.WHITE
+            game_master.move(x + 1, y + 1, color)
             game_master.print_cui()
 
     def print(self):
