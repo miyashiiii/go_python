@@ -3,6 +3,7 @@ from game_master import GameMaster
 board_size = 5
 game_master = GameMaster(board_size)
 while True:
+    print("next:",game_master.current_color)
     point = input("[x, y]:")
     try:
         x, y = point.split(",")
