@@ -61,6 +61,17 @@ class GameMaster:
             row = row.copy()
             self.checked_board.append(row)
 
+    def check_suicide(self,x,y):
+        self.checked_board[y][x] = True
+        self.current_color = self.current_color.opponent
+        captured = self.check_captured_recursive(x, y)
+        self.refresh_checked_board()
+        self.current_color = self.current_color.opponent
+        if captured is not None:
+            return True
+        else:
+            return False
+
     def move(self, x, y):
         print("input: ", x, y, self.current_color)
         try:
@@ -73,6 +84,11 @@ class GameMaster:
             return
             # raise ValueError
         self.board[y][x] = self.current_color.to_square()
+        is_suicide=self.check_suicide(x,y)
+        if is_suicide:
+            self.board[y][x]=Square.empty
+            print("it is suicide!")
+            return
 
         self.moves.append((x, y, self.current_color))
         self.check_captured(x, y)
@@ -184,7 +200,10 @@ class GameMaster:
 
 
 if __name__ == "__main__":
-    game_master = GameMaster()
-    game_master.move(4, 4, 1)
-    print(game_master.board)
+    game_master = GameMaster(5)
+    game_master.move(1,0)
+    game_master.move(0,0)
+    game_master.move(0,1)
+    game_master.print_cui()
+    game_master.move(0,0)
     game_master.print_cui()
