@@ -170,17 +170,22 @@ class GameMaster:
             
             """
             try:
+
+                # 枠外ならcontinue (capture可能性あり)
                 if nextx < 0 or nextx > self.size or nexty < 0 or nexty > self.size:
                     continue
+                # check済みならcontinue (capture可能性あり)
                 if self.checked_board[nexty][nextx]:
                     continue
                 # print("next:",nextx,nexty)
                 square = self.board[nexty][nextx]
                 self.checked_board[nexty][nextx] = True
 
+                # 自石ならcontinue (capture可能性あり)
                 if square == self.current_color.to_square():
                     continue
-                if square == self.current_color.opponent.to_square():
+                # 相手の石ならさらに四方を探索 (capture可能性あり)
+                elif square == self.current_color.opponent.to_square():
                     captured_tmp = self.check_captured_recursive(nextx, nexty)
                     if captured_tmp is None:
                         return None
@@ -188,7 +193,7 @@ class GameMaster:
                         self.checked_board[nexty][nextx] = True
 
                         captured += captured_tmp
-                if square == Square.empty:
+                elif square == Square.empty:
                     # print("empty")
                     return None
 
