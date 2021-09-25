@@ -107,7 +107,6 @@ class SgfData:
                 game_master.pass_()
                 continue
             x, y = self.flat_idx_to_idx(move)
-            color = Color.black if i % 2 == 0 else Color.white
             game_master.move(x, y)
             game_master.print_cui()
 

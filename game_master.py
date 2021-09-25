@@ -52,6 +52,10 @@ class GameMaster:
         self.refresh_checked_board()
         self.recursive = 0
 
+        self.black_hama = 0
+        self.white_hama = 0
+        self.last_hama_num = 0
+
     def refresh_checked_board(self):
         self.checked_board = []
         row = []
@@ -148,9 +152,22 @@ class GameMaster:
 
         print("cap list:", captured_squares)
         if captured_squares is not None:
+            # コウチェック
+            if len(captured_squares) == 1 and self.last_hama_num == 1 \
+                    and self.moves[-1][0] == captured_squares[0][0] \
+                    and self.moves[-1][1] == captured_squares[0][1]:
+                self.board[y][x] = Square.empty
+                raise ValueError("ko")
+
             for x, y in captured_squares:
                 self.board[y][x] = Square.empty
-
+            self.last_hama_num = len(captured_squares)
+            if self.current_color == Color.black:
+                self.black_hama += self.last_hama_num
+            else:
+                self.white_hama += self.last_hama_num
+        else:
+            self.last_hama_num = 0
         self.refresh_checked_board()
 
     def check_captured_recursive(self, x, y):
