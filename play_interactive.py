@@ -14,5 +14,9 @@ while True:
     except Exception:
         print("invalid input")
         continue
-    game_master.move(x, y)
+    try:
+        game_master.move(x, y)
+    except ValueError as e:
+        print(e)
     game_master.print_cui()
+

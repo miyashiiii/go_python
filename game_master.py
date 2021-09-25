@@ -61,7 +61,7 @@ class GameMaster:
             row = row.copy()
             self.checked_board.append(row)
 
-    def check_suicide(self,x,y):
+    def check_suicide(self, x, y):
         self.checked_board[y][x] = True
         self.current_color = self.current_color.opponent
         captured = self.check_captured_recursive(x, y)
@@ -77,18 +77,15 @@ class GameMaster:
         try:
             square = self.board[y][x]
         except IndexError:
-            print("invalid index")
-            return
+            raise ValueError("invalid index")
         if square in [Square.black, Square.white]:
-            print("already stone exist.")
-            return
+            raise ValueError("already stone exist.")
             # raise ValueError
         self.board[y][x] = self.current_color.to_square()
-        is_suicide=self.check_suicide(x,y)
+        is_suicide = self.check_suicide(x, y)
         if is_suicide:
-            self.board[y][x]=Square.empty
-            print("it is suicide!")
-            return
+            self.board[y][x] = Square.empty
+            raise ValueError("it is suicide")
 
         self.moves.append((x, y, self.current_color))
         self.check_captured(x, y)
@@ -206,9 +203,12 @@ class GameMaster:
 
 if __name__ == "__main__":
     game_master = GameMaster(5)
-    game_master.move(1,0)
-    game_master.move(0,0)
-    game_master.move(0,1)
-    game_master.print_cui()
-    game_master.move(0,0)
-    game_master.print_cui()
+    try:
+        game_master.move(1, 0)
+        game_master.move(0, 0)
+        game_master.move(0, 1)
+        game_master.print_cui()
+        game_master.move(0, 0)
+        game_master.print_cui()
+    except ValueError as e:
+        print("ERROR:", e)
